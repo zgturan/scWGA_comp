@@ -1,0 +1,11 @@
+args <- commandArgs(trailingOnly = T)
+filenamex=as.character(args[[1]])
+
+turan_SegNorm = read.table(file.path('./data/processed/', filenamex, 'SegFixed'), header=TRUE, sep="\t")
+turan_SegNorm$CHR= as.character(turan_SegNorm$CHR)
+turan_ploidy <- readRDS(file.path('./data/processed/rds', paste0('cell_cn_', filenamex, '.rds')))
+turan_ploidy= data.frame(id= turan_ploidy[,'Sample'], predicted_ploidy=as.numeric(turan_ploidy[,'Copy_Number']))
+turan_ploidy$id= as.character(turan_ploidy$id)
+identical(colnames(turan_SegNorm[,4:ncol(turan_SegNorm)]), turan_ploidy$id)
+turan_clouds= sweep(turan_SegNorm[,4:ncol(turan_SegNorm)], 2, turan_ploidy$predicted_ploidy, "*")
+saveRDS(turan_clouds, file= file.path('./data/processed/rds', paste0(filenamex, '_SegFixed_clouds_genome.rds')))
