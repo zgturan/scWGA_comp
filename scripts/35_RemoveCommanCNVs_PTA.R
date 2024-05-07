@@ -44,7 +44,7 @@ all_gains= result4[!result4$cnv%in%c(0,1),]
 within_two_bin_sizes = function(cnv1_start_bin, cnv1_end_bin, cnv2_start_bin, cnv2_end_bin) {
                           start_diff = abs(cnv1_start_bin - cnv2_start_bin)
                           end_diff   = abs(cnv1_end_bin - cnv2_end_bin)
-                          return((start_diff) <= 5000000 & (end_diff) <= 50000000)}
+                          return((start_diff) <= 5000000 & (end_diff) <= 5000000)}
 
 process_dataframe <- function(df) {
   df$shared_cell_number = 0
